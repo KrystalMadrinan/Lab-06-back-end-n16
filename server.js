@@ -14,7 +14,7 @@ app.use(cors());
 
 // route syntax = app.<operation>('route', callback);
 app.get('/', (request, response) => {
-  response.send('home page!');
+  response.send('home page!!!!');
 });
 
 // app.get('/about', aboutUsHandler);
@@ -24,29 +24,34 @@ app.get('/', (request, response) => {
 // }
 
 
-// // lab route stuff
-// app.get('/location', (request, response) => {
-//   try {
-//     //Getting info for object
-//     const geoData = require('./data/geo.json');
-//     const city = request.query.city;
-//     const locationData = new Location(city, geoData);
-//     response.send(locationData);
-//   } catch (error) {
-//     //error function
-//   }
+// route for location/map
+app.get('/location', (request, response) => {
+  try {
+    //Getting info for object
+    const geoData = require('./data/geo.json');
+    const city = request.query.city;
+    const locationData = new Location(city, geoData);
+    response.send(locationData);
+    return locationData;
+  } catch (error) {
+    errorHandler('it went wrong.', request, response);
+    
+  }
+  
+});
+//routes above function below
 
-// });
-// //routes above function below
+//creating object
+function Location(city, geoData) {
+  this.search_query = city;
+  this.formatted_query = geoData[0].display_name;
+  this.latitude = geoData[0].lat;
+  this.longitute = geoData.results[0].lon;
+}
 
-// //creating object
-// function Location(city, geoData) {
-//   this.search_query = city;
-//   this.formatted_query = geoData[0].display_name;
-//   this.latitude = geoData[0].lat;
-//   this.longitute = geoData.results[0].lon;
-// }
-
+function errorHandler(error, request, response) {
+  response.status(500).send(error);
+}
 
 // Ensure the server is listening for requests
 // ***This must be at the end of the file***
