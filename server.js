@@ -27,26 +27,30 @@ app.get('/', (request, response) => {
 // route for location/map
 app.get('/location', (request, response) => {
   try {
+    console.log(request.query);
     //Getting info for object
-    const geoData = require('./data/geo.json');
+    const geoData = require('./geo.json');
+    console.log(geoData);
     const city = request.query.city;
     const locationData = new Location(city, geoData);
+    console.log('location data:', locationData);
     response.send(locationData);
     return locationData;
   } catch (error) {
     errorHandler('it went wrong.', request, response);
-    
+
   }
-  
+
 });
 //routes above function below
 
 //creating object
 function Location(city, geoData) {
+  console.log('locationbuildobj');
   this.search_query = city;
   this.formatted_query = geoData[0].display_name;
   this.latitude = geoData[0].lat;
-  this.longitute = geoData.results[0].lon;
+  this.longitude = geoData[0].lon;
 }
 
 function errorHandler(error, request, response) {
