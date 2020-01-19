@@ -53,6 +53,29 @@ function Location(city, geoData) {
   this.longitude = geoData[0].lon;
 }
 
+//Rout for weather 
+
+app.get('/weather', (request, response) => {
+  try {
+      const weatherData = require('./darksky.json');
+      const weather = request.query.time;
+      const forecast = new Weather(time, weatherData);
+      response.send(weatherData);
+      return weatherData;
+  } catch (error) {
+    errorHandler('something went wrong', request, response);
+  }
+})
+
+//object for weather 
+
+function Weather(time, weatherData) {
+  this.search_query = time;
+  this.formatted_query = weatherData[0].summary;
+}
+
+
+
 function errorHandler(error, request, response) {
   response.status(500).send(error);
 }
