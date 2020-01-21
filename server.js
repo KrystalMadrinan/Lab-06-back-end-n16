@@ -17,12 +17,6 @@ app.get('/', (request, response) => {
   response.send('home page!!!!');
 });
 
-// app.get('/about', aboutUsHandler);
-
-// function aboutUsHandler(request, response) {
-//   response.status(200).send('About us page');
-// }
-
 
 // route for location/map
 app.get('/location', (request, response) => {
@@ -53,27 +47,27 @@ function Location(city, geoData) {
   this.longitude = geoData[0].lon;
 }
 
-//Rout for weather
+//Route for weather
 
 app.get('/weather', (request, response) => {
   try {
     const weatherData = require('./darksky.json');
     const forecastArray = [];
     weatherData.daily.data.forEach(darkSky => {
-      const time = darkSky.time;
+      const time = new Date(darkSky.time *1000).toString().slice(0, 15);
       const forecast = darkSky.summary;
       const weatherObj = new Weather(time, forecast);
       forecastArray.push(weatherObj);
     });
     response.send(forecastArray);
 
-    // return weatherData;
   } catch (error) {
     errorHandler('something went wrong', request, response);
   }
 })
 
-//object for weather
+
+//constructor for weather
 
 
 function Weather(forecast, time) {
