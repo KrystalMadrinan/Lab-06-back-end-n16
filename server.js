@@ -81,8 +81,6 @@ function Weather(forecast, time) {
   this.time = time;
 }
 
-app.listen(PORT, () => console.log(`server up  on port ${PORT}`));
-
 function errorHandler(error, request, response) {
   response.status(500).send(error);
 }
