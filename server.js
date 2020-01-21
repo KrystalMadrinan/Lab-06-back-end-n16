@@ -35,7 +35,7 @@ app.get('/location', (request, response) => {
     const locationData = new Location(city, geoData);
     console.log('location data:', locationData);
     response.send(locationData);
-    return locationData;
+    // return locationData;
   } catch (error) {
     errorHandler('it went wrong.', request, response);
 
