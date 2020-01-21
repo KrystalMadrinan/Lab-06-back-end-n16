@@ -37,7 +37,7 @@ app.get('/location', (request, response) => {
     response.send(locationData);
     return locationData;
   } catch (error) {
-    errorHandler('something went wrong.', request, response);
+    errorHandler('it went wrong.', request, response);
 
   }
 
@@ -53,7 +53,7 @@ function Location(city, geoData) {
   this.longitude = geoData[0].lon;
 }
 
-//Route for weather
+//Rout for weather
 
 app.get('/weather', (request, response) => {
   try {
@@ -75,12 +75,13 @@ app.get('/weather', (request, response) => {
 
 //object for weather
 
+
 function Weather(forecast, time) {
   this.forecast = forecast;
   this.time = time;
 }
 
-
+app.listen(PORT, () => console.log(`server up  on port ${PORT}`));
 
 function errorHandler(error, request, response) {
   response.status(500).send(error);
