@@ -75,12 +75,11 @@ app.get('/weather', (request, response) => {
 
 //object for weather
 
+
 function Weather(forecast, time) {
   this.forecast = forecast;
   this.time = time;
 }
-
-
 
 function errorHandler(error, request, response) {
   response.status(500).send(error);
