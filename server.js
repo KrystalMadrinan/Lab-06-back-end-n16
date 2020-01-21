@@ -69,12 +69,12 @@ app.get('/weather', (request, response) => {
 
 //object for weather 
 
-function Weather(time, weatherData) {
-  this.search_query = time;
-  this.formatted_query = weatherData[0].summary;
+function Weather(localObject) {
+  this.forecast = localObject.summary;
+  this.time = new Data(localObject.time * 1000).toUTCString().slice(0, 16);
 }
 
-
+app.listen(PORT, () => console.log(`server up  on port ${PORT}`));
 
 function errorHandler(error, request, response) {
   response.status(500).send(error);
