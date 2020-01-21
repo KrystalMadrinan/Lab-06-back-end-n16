@@ -35,9 +35,9 @@ app.get('/location', (request, response) => {
     const locationData = new Location(city, geoData);
     console.log('location data:', locationData);
     response.send(locationData);
-    return locationData;
+    // return locationData;
   } catch (error) {
-    errorHandler('something went wrong.', request, response);
+    errorHandler('it went wrong.', request, response);
 
   }
 
@@ -53,7 +53,7 @@ function Location(city, geoData) {
   this.longitude = geoData[0].lon;
 }
 
-//Route for weather
+//Rout for weather
 
 app.get('/weather', (request, response) => {
   try {
