@@ -37,7 +37,7 @@ app.get('/location', (request, response) => {
     response.send(locationData);
     return locationData;
   } catch (error) {
-    errorHandler('it went wrong.', request, response);
+    errorHandler('something went wrong.', request, response);
 
   }
 
@@ -53,28 +53,33 @@ function Location(city, geoData) {
   this.longitude = geoData[0].lon;
 }
 
-//Rout for weather 
+//Route for weather
 
 app.get('/weather', (request, response) => {
   try {
-      const weatherData = require('./darksky.json');
-      const weather = request.query.time;
-      const forecast = new Weather(time, weatherData);
-      response.send(weatherData);
-      return weatherData;
+    const weatherData = require('./darksky.json');
+    const forecastArray = [];
+    weatherData.daily.data.forEach(darkSky => {
+      const time = darkSky.time;
+      const forecast = darkSky.summary;
+      const weatherObj = new Weather(time, forecast);
+      forecastArray.push(weatherObj);
+    });
+    response.send(forecastArray);
+
+    // return weatherData;
   } catch (error) {
     errorHandler('something went wrong', request, response);
   }
 })
 
-//object for weather 
+//object for weather
 
-function Weather(localObject) {
-  this.forecast = localObject.summary;
-  this.time = new Data(localObject.time * 1000).toUTCString().slice(0, 16);
+
+function Weather(forecast, time) {
+  this.forecast = forecast;
+  this.time = time;
 }
-
-app.listen(PORT, () => console.log(`server up  on port ${PORT}`));
 
 function errorHandler(error, request, response) {
   response.status(500).send(error);
