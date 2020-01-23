@@ -17,12 +17,6 @@ app.get('/', (request, response) => {
   response.send('home page!!!!');
 });
 
-// app.get('/about', aboutUsHandler);
-
-// function aboutUsHandler(request, response) {
-//   response.status(200).send('About us page');
-// }
-
 
 // route for location/map
 app.get('/location', (request, response) => {
